@@ -1,0 +1,19 @@
+FROM debian:jessie
+MAINTAINER willem@clarin.eu
+
+ENV JAVA_HOME /usr
+ENV CATALINA_HOME /usr/share/tomcat8
+ENV CATALINA_BASE /var/lib/tomcat8
+ENV CATALINA_PID /var/run/tomcat8.pid
+ENV JAVA_OPTS "-Djava.security.egd=file:/dev/./urandom"
+
+#Install packages
+RUN apt-get update \
+ && apt-get install -y tomcat8
+
+#Expose log directories as volumes
+VOLUME ["/var/log/tomcat8"]
+
+EXPOSE 8080
+
+CMD ["/usr/share/tomcat8/bin/catalina.sh", "run"]
